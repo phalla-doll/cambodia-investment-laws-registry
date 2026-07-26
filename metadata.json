@@ -1,0 +1,6 @@
+{
+  "name": "Cambodia Investment Laws Registry",
+  "description": "A modern, distinctive portal for finding and reading Cambodian investment laws and regulations.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
