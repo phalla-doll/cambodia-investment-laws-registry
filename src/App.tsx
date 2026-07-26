@@ -4,9 +4,10 @@ import { ArrowUp } from 'lucide-react';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import DocumentRow from './components/DocumentRow';
+import DocumentModal from './components/DocumentModal';
 import Footer from './components/Footer';
 import { documents } from './data';
-import { Category } from './types';
+import { Category, LegalDocument } from './types';
 
 export type MainTab = 'Overview' | 'Investment Guide' | 'Laws & Regulations' | 'Services';
 export type SortOrder = 'newest' | 'oldest';
@@ -17,6 +18,7 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortOrder, setSortOrder] = useState<SortOrder>('newest');
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [selectedDocument, setSelectedDocument] = useState<LegalDocument | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -94,7 +96,11 @@ export default function App() {
               <div className="flex flex-col">
                 {filteredDocs.length > 0 ? (
                   filteredDocs.map(doc => (
-                    <DocumentRow key={doc.id} document={doc} />
+                    <DocumentRow 
+                      key={doc.id} 
+                      document={doc} 
+                      onSelect={setSelectedDocument} 
+                    />
                   ))
                 ) : (
                   <div className="py-32 text-center bg-surface/50 border border-gray-100 mt-4 rounded-sm">
@@ -124,6 +130,11 @@ export default function App() {
       </main>
       
       <Footer />
+
+      <DocumentModal 
+        document={selectedDocument} 
+        onClose={() => setSelectedDocument(null)} 
+      />
 
       <AnimatePresence>
         {showScrollTop && (
