@@ -1,6 +1,15 @@
 import { Search, Menu } from 'lucide-react';
+import { MainTab } from '../App';
+import { motion } from 'motion/react';
 
-export default function Header() {
+interface HeaderProps {
+  activeTab: MainTab;
+  setActiveTab: (tab: MainTab) => void;
+}
+
+export default function Header({ activeTab, setActiveTab }: HeaderProps) {
+  const tabs: MainTab[] = ['Overview', 'Investment Guide', 'Laws & Regulations', 'Services'];
+
   return (
     <header className="w-full bg-white relative shrink-0">
       {/* State Motto Bar */}
@@ -36,20 +45,34 @@ export default function Header() {
 
         {/* Navigation row */}
         <div className="h-14 flex items-center justify-between border-b border-gray-200">
-          <nav className="hidden md:flex items-center gap-10 text-[10px] font-bold uppercase tracking-[0.15em]">
-            <a href="#" className="text-gray-500 hover:text-oxford transition-colors">Overview</a>
-            <a href="#" className="text-gray-500 hover:text-oxford transition-colors">Investment Guide</a>
-            <a href="#" className="text-gold border-b-2 border-gold h-14 flex items-center">Laws & Regulations</a>
-            <a href="#" className="text-gray-500 hover:text-oxford transition-colors">Services</a>
+          <nav className="hidden md:flex items-center gap-10 text-xs font-bold uppercase tracking-widest">
+            {tabs.map(tab => (
+              <button 
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`relative h-14 flex items-center transition-colors hover:text-oxford ${
+                  activeTab === tab ? 'text-gold' : 'text-gray-500'
+                }`}
+              >
+                {tab}
+                {activeTab === tab && (
+                  <motion.div 
+                    layoutId="headerTabIndicator"
+                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-gold"
+                    transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                  />
+                )}
+              </button>
+            ))}
           </nav>
           
           <button className="md:hidden text-oxford p-2 -ml-2">
             <Menu size={20} />
           </button>
 
-          <button className="text-gray-400 hover:text-oxford transition-colors flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.15em] group">
+          <button className="text-gray-400 hover:text-oxford transition-colors flex items-center gap-3 text-xs font-bold uppercase tracking-widest group">
             <span className="hidden sm:inline group-hover:text-gold transition-colors">Global Search</span>
-            <Search size={14} strokeWidth={2.5} />
+            <Search size={16} strokeWidth={2.5} />
           </button>
         </div>
       </div>
