@@ -1,4 +1,5 @@
 import { Category } from '../types';
+import { motion } from 'motion/react';
 
 interface SidebarProps {
   selectedCategory: Category | 'All';
@@ -35,18 +36,30 @@ export default function Sidebar({ selectedCategory, setSelectedCategory, searchQ
           <h3 className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4">Filter by Type</h3>
           <ul className="flex flex-col gap-1">
             {CATEGORIES.map(cat => (
-              <li key={cat}>
+              <li key={cat} className="relative">
+                {selectedCategory === cat && (
+                  <motion.div
+                    layoutId="activeCategoryBg"
+                    className="absolute inset-0 bg-oxford shadow-sm"
+                    initial={false}
+                    transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                  />
+                )}
                 <button 
                   onClick={() => setSelectedCategory(cat)}
-                  className={`w-full text-left py-2.5 px-3 text-sm transition-all flex items-center justify-between group ${
+                  className={`relative w-full text-left py-2.5 px-3 text-sm transition-colors flex items-center justify-between group z-10 ${
                     selectedCategory === cat 
-                      ? 'bg-oxford text-white font-medium shadow-sm' 
+                      ? 'text-white font-medium' 
                       : 'text-gray-600 hover:bg-surface hover:text-ink'
                   }`}
                 >
-                  {cat}
+                  <span>{cat}</span>
                   {selectedCategory === cat && (
-                    <span className="w-1.5 h-1.5 rounded-full bg-gold"></span>
+                    <motion.span 
+                      layoutId="activeCategoryDot"
+                      className="w-1.5 h-1.5 rounded-full bg-gold"
+                      transition={{ type: "spring", stiffness: 400, damping: 35 }}
+                    />
                   )}
                 </button>
               </li>
