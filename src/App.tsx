@@ -35,6 +35,14 @@ export default function App() {
         />
         
         <div className="flex-1 w-full min-w-0 lg:pt-2">
+          <nav className="flex items-center flex-wrap gap-2.5 text-[9px] uppercase tracking-[0.2em] font-bold text-gray-400 mb-10">
+            <a href="#" className="hover:text-gold transition-colors">Home</a>
+            <span className="text-gray-300 font-normal">/</span>
+            <a href="#" className="hover:text-gold transition-colors">Registry</a>
+            <span className="text-gray-300 font-normal">/</span>
+            <span className="text-oxford">{selectedCategory === 'All' ? 'All Documents' : selectedCategory}</span>
+          </nav>
+
           <div className="flex items-end justify-between border-b-2 border-oxford pb-3 mb-4">
              <h2 className="text-[10px] font-bold text-oxford uppercase tracking-widest">Document Ledger</h2>
              <span className="text-xs font-semibold text-gray-500">{filteredDocs.length} Results</span>
